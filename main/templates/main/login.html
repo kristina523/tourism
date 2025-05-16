@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% block title %}Вход — TravelDream{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card border-0 shadow-lg animate-up">
+                <div class="card-header text-center bg-gradient" style="background: linear-gradient(135deg, #00b4d8 0%, #48cae4 100%);">
+                    <h2 class="h4 text-white mb-0"><i class="fas fa-sign-in-alt me-2"></i>Вход в аккаунт</h2>
+                </div>
+                <div class="card-body p-5">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label fw-bold">Логин или Email</label>
+                            <input type="text" name="username" class="form-control" id="id_username" required autofocus
+                                   value="{{ form.username.value|default:'' }}">
+                            {% if form.username.errors %}
+                                <div class="text-danger small">{{ form.username.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label fw-bold">Пароль</label>
+                            <input type="password" name="password" class="form-control" id="id_password" required>
+                            {% if form.password.errors %}
+                                <div class="text-danger small">{{ form.password.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background: linear-gradient(135deg, #00b4d8 0%, #48cae4 100%); border: none;">
+                            Войти
+                        </button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <span class="text-muted">Нет аккаунта?</span>
+                        <a href="{% url 'register' %}" class="fw-bold" style="color: #00b4d8;">Зарегистрироваться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .card {
+        border-radius: 18px;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+    }
+    .card:hover {
+        box-shadow: 0 10px 32px rgba(0,180,216,0.13);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #00b4d8 0%, #48cae4 100%);
+        border: none;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #48cae4 0%, #00b4d8 100%);
+    }
+</style>
+{% endblock %}

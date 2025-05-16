@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% block title %}История заказов{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 gradient-text fw-bold">История заказов</h2>
+    {% if orders %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>№ заказа</th>
+                        <th>Дата</th>
+                        <th>Туры</th>
+                        <th>Статус оплаты</th>
+                        <th>Доставка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td class="fw-bold text-primary">#{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            <ul class="mb-0 ps-3">
+                                {% for item in order.items.all %}
+                                <li>
+                                    <b>{{ item.tour.title }}</b>
+                                    <span class="badge bg-gradient-tour ms-1">{{ item.quantity }} шт.</span>
+                                    <span class="text-muted small ms-1">{{ item.price }} руб.</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            {% if order.is_paid %}
+                                <span class="badge bg-success bg-opacity-75 px-3 py-2">Оплачен</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark px-3 py-2">Ожидает оплаты</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-gradient-delivery mb-1">{{ order.get_delivery_method_display }}</span>
+                            {% if order.address %}
+                                <div class="text-muted small">{{ order.address }}</div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">У вас пока нет заказов.</p>
+    {% endif %}
+</div>
+<style>
+    .bg-gradient-tour {
+        background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.95em;
+        border-radius: 0.7em;
+        box-shadow: 0 2px 8px rgba(255,204,51,0.10);
+    }
+    .bg-gradient-delivery {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        color: #fff;
+        font-weight: 500;
+        font-size: 0.95em;
+        border-radius: 0.7em;
+    }
+    .gradient-text {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>
+{% endblock %}

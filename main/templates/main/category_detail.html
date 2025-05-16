@@ -1,0 +1,168 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ category.category_name }} — Категория туров{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow-lg mb-5 rounded-4 overflow-hidden animate__animated animate__fadeIn">
+                {% if category.image_url %}
+                <div class="category-img-top position-relative">
+                    <img src="{{ category.image_url }}" alt="{{ category.category_name }}" class="w-100 h-100 object-fit-cover" style="max-height:260px;">
+                    <div class="category-img-gradient"></div>
+                    <span class="badge bg-gradient-cat position-absolute top-0 start-0 m-3 px-3 py-2 fs-6 shadow-sm">
+                        <i class="fas fa-image me-1"></i> Категория: {{ category.category_name }}
+                    </span>
+                </div>
+                {% endif %}
+                <div class="card-header bg-gradient-primary text-white rounded-top-4" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);">
+                    <h2 class="h3 mb-0 d-flex align-items-center">
+                        <i class="fas fa-folder-open me-3 fs-2"></i>
+                        <span>{{ category.category_name }}</span>
+                    </h2>
+                </div>
+                <div class="card-body bg-light">
+                    <h5 class="mb-3 text-primary fw-bold">Описание</h5>
+                    <p class="fs-5 text-dark">{{ category.description|default:"Описание отсутствует." }}</p>
+                </div>
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center rounded-bottom-4">
+                    <div>
+                        <a href="{% url 'edit_category' category.id %}" class="btn btn-warning btn-sm me-2 shadow-sm">
+                            <i class="fas fa-edit"></i> Изменить
+                        </a>
+                        <a href="{% url 'delete_category' category.id %}" class="btn btn-danger btn-sm shadow-sm">
+                            <i class="fas fa-trash-alt"></i> Удалить
+                        </a>
+                    </div>
+                    <a href="{% url 'categories' %}" class="btn btn-outline-secondary btn-sm shadow-sm">
+                        <i class="fas fa-arrow-left"></i> Назад к списку
+                    </a>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 animate__animated animate__fadeInUp">
+                <div class="card-header bg-white border-bottom-0 rounded-top-4">
+                    <h5 class="mb-0 text-secondary fw-bold">
+                        <i class="fas fa-map-marked-alt me-2"></i>Туры в этой категории
+                    </h5>
+                </div>
+                <div class="card-body bg-light rounded-bottom-4">
+                    {% with tours=category.tour_set.all %}
+                        {% if tours %}
+                            <div class="row g-3">
+                                {% for tour in tours %}
+                                    <div class="col-12">
+                                        <div class="tour-list-card d-flex align-items-center p-3 rounded-3 shadow-sm bg-white position-relative">
+                                            {% if tour.image_url %}
+                                                <img src="{{ tour.image_url }}" alt="{{ tour.title }}" class="rounded-3 me-3 tour-list-img" style="width:70px; height:70px; object-fit:cover;">
+                                            {% else %}
+                                                <div class="rounded-3 me-3 tour-list-img d-flex align-items-center justify-content-center bg-light" style="width:70px; height:70px;">
+                                                    <i class="fas fa-image text-muted"></i>
+                                                </div>
+                                            {% endif %}
+                                            <div class="flex-grow-1">
+                                                <div class="fw-semibold fs-5 mb-1" style="color:#2575fc;">{{ tour.title }}</div>
+                                                <div class="text-muted small">{{ tour.description|truncatechars:60 }}</div>
+                                            </div>
+                                            <a href="{% url 'product_detail' tour.id %}" class="btn btn-gradient-tour btn-sm ms-3 px-3">
+                                                Подробнее
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">В этой категории пока нет туров.</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .category-img-top {
+        width: 100%;
+        height: 260px;
+        overflow: hidden;
+        position: relative;
+    }
+    .category-img-top img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.92) saturate(1.1);
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+    }
+    .category-img-gradient {
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        background: linear-gradient(180deg,rgba(0,123,255,0.08) 0%,rgba(0,198,255,0.10) 100%);
+        z-index: 1;
+    }
+    .bg-gradient-cat {
+        background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.08em;
+        border-radius: 0.7em;
+        box-shadow: 0 2px 8px rgba(255,204,51,0.10);
+    }
+    .btn-gradient-tour {
+        background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+        color: #fff !important;
+        border: none;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-gradient-tour:hover, .btn-gradient-tour:focus {
+        background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+        color: #fff !important;
+        box-shadow: 0 2px 12px rgba(67,206,162,0.12);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .tour-list-card {
+        transition: box-shadow 0.2s, transform 0.2s;
+        border: 1.5px solid #f1f5fa;
+    }
+    .tour-list-card:hover {
+        box-shadow: 0 6px 24px rgba(60, 90, 170, 0.13);
+        transform: translateY(-2px) scale(1.01);
+        border-color: #43cea2;
+    }
+    .tour-list-img {
+        box-shadow: 0 2px 8px rgba(60, 90, 170, 0.08);
+    }
+    .btn {
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.2s;
+    }
+    .btn-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+    .btn-warning:hover {
+        background-color: #e0a800;
+        color: white;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+        color: white;
+    }
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
+<!-- Для анимации можно подключить animate.css или убрать классы animate__animated animate__fadeIn -->
+{% endblock %}

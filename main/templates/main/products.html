@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+{% block title %}Туры — TravelDream{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="gradient-text mb-4 text-center fw-bold" style="font-size:2.5rem; letter-spacing:1px;">Наши туры</h2>
+    <div class="text-end mb-4">
+        <a href="{% url 'add_product' %}" class="btn btn-main btn-lg shadow-sm">
+            <i class="fas fa-plus-circle me-2"></i>Добавить тур
+        </a>
+    </div>
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card card-tour h-100 border-0 shadow-lg position-relative">
+                {% if product.image_url %}
+                    <img src="{{ product.image_url }}" class="card-img-top tour-img" alt="Фото тура">
+                {% else %}
+                    <img src="https://source.unsplash.com/400x200/?travel,{{ product.title|urlencode }}" class="card-img-top tour-img" alt="Фото тура">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-2" style="color:#2575fc;">{{ product.title }}</h5>
+                    <p class="card-text text-muted mb-3" style="min-height:60px;">{{ product.description|truncatechars:80 }}</p>
+                    <div class="mt-auto">
+                        <span class="badge bg-gradient-price mb-2" style="font-size:1.1rem;"><i class="fas fa-ruble-sign"></i> {{ product.price }}</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-main btn-sm shadow-sm"><i class="fas fa-eye me-1"></i>Подробнее</a>
+                    <a href="{% url 'edit_product' product.id %}" class="btn btn-edit btn-sm shadow-sm"><i class="fas fa-edit me-1"></i>Изменить</a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-delete btn-sm shadow-sm"><i class="fas fa-trash-alt me-1"></i>Удалить</a>
+                </div>
+                
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Туров пока нет.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    .card-tour {
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.25s cubic-bezier(.4,2,.3,1), box-shadow 0.25s;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(60, 90, 170, 0.10);
+    }
+    .card-tour:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 12px 32px rgba(60, 90, 170, 0.18);
+    }
+    .tour-img {
+        height: 220px;
+        object-fit: cover;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        transition: filter 0.3s;
+    }
+    .card-tour:hover .tour-img {
+        filter: brightness(0.93) saturate(1.2);
+    }
+    .btn-main {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        color: #fff !important;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-main:hover, .btn-main:focus {
+        background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+        color: #fff !important;
+        box-shadow: 0 2px 12px rgba(106,17,203,0.12);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .btn-edit {
+        background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+        color: #fff !important;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-edit:hover, .btn-edit:focus {
+        background: linear-gradient(90deg, #ffcc33 0%, #ffb347 100%);
+        color: #fff !important;
+        box-shadow: 0 2px 12px rgba(255,204,51,0.12);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .btn-delete {
+        background: linear-gradient(90deg, #ff5858 0%, #f857a6 100%);
+        color: #fff !important;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-delete:hover, .btn-delete:focus {
+        background: linear-gradient(90deg, #f857a6 0%, #ff5858 100%);
+        color: #fff !important;
+        box-shadow: 0 2px 12px rgba(248,87,166,0.12);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .bg-gradient-price {
+        background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+        color: #fff;
+        padding: 0.5em 1em;
+        border-radius: 1em;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(67,206,162,0.10);
+    }
+    .gradient-text {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>
+{% endblock %}

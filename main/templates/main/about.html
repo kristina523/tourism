@@ -1,0 +1,182 @@
+{% extends 'main/base.html' %}
+{% block title %}О компании — TravelDream{% endblock %}
+
+{% block styles %}
+<style>
+    /* Анимации */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    /* Градиентный текст */
+    .gradient-text {
+        background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+    
+    /* Карточки */
+    .card-hover {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: none;
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Основной контент */
+    .about-hero {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 5rem 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 3rem;
+    }
+    
+    .stats-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #2575fc;
+    }
+    
+    .delayed-animation {
+        opacity: 0;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    /* Декоративные элементы */
+    .blob {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(45deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
+        border-radius: 50%;
+        z-index: -1;
+    }
+    
+    .blob-1 {
+        top: -100px;
+        right: -100px;
+    }
+    
+    .blob-2 {
+        bottom: -50px;
+        left: -100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-hero position-relative overflow-hidden">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4 gradient-text animate-fade">О компании</h1>
+        <p class="lead mx-auto animate-fade delay-1" style="max-width: 700px;">
+            TravelDream — это команда профессионалов, которые организуют для вас лучшие путешествия по всему миру. 
+            Мы работаем с 2010 года и гордимся тысячами довольных клиентов!
+        </p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4 animate-fade delay-1">
+            <div class="card-hover card h-100 shadow-sm p-4 text-center">
+                <div class="stats-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3 class="gradient-text">> 1000 туров</h3>
+                <p class="text-muted">по 50+ странам мира</p>
+                <div class="mt-3">
+                    <span class="badge bg-primary bg-opacity-10 text-primary me-2">Экскурсии</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary me-2">Отдых</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary">Приключения</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 animate-fade delay-2">
+            <div class="card-hover card h-100 shadow-sm p-4 text-center">
+                <div class="stats-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="gradient-text">Премиум-сервис</h3>
+                <p class="text-muted">круглосуточная поддержка</p>
+                <div class="progress mt-3" style="height: 8px;">
+                    <div class="progress-bar bg-gradient" role="progressbar" style="width: 98%;" 
+                         aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted mt-2">98% скорость ответа</small>
+            </div>
+        </div>
+        
+        <div class="col-md-4 animate-fade delay-3">
+            <div class="card-hover card h-100 shadow-sm p-4 text-center">
+                <div class="stats-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="gradient-text">Гарантия впечатлений</h3>
+                <p class="text-muted">99% довольных клиентов</p>
+                <div class="d-flex justify-content-center mt-3">
+                    <i class="fas fa-star text-warning mx-1"></i>
+                    <i class="fas fa-star text-warning mx-1"></i>
+                    <i class="fas fa-star text-warning mx-1"></i>
+                    <i class="fas fa-star text-warning mx-1"></i>
+                    <i class="fas fa-star text-warning mx-1"></i>
+                    <span class="ms-2">4.9/5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5 pt-5">
+        <div class="col-lg-6 animate-fade">
+            <h2 class="gradient-text mb-4">Наша миссия</h2>
+            <p class="lead">Сделать путешествия доступными, комфортными и незабываемыми для каждого.</p>
+            <p>Мы тщательно отбираем отели, экскурсии и маршруты, чтобы ваше путешествие было идеальным от начала до конца.</p>
+            <div class="d-flex align-items-center mt-4">
+                <div class="flex-shrink-0">
+                    <img src="https://via.placeholder.com/80" class="rounded-circle" alt="Основатель">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="mb-0">Алексей Петров</h5>
+                    <p class="text-muted mb-0">Основатель TravelDream</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 animate-fade delay-1">
+            <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     class="object-fit-cover" alt="Наша команда">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Активация анимаций при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        const elements = document.querySelectorAll('.animate-fade');
+        elements.forEach(el => {
+            el.style.opacity = '1';
+        });
+    });
+</script>
+{% endblock %}

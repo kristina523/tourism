@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+{% block title %}Категории туров — TravelDream{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto text-center">
+            <h1 class="display-5 fw-bold gradient-text mb-3 animate-up">Категории туров</h1>
+            <p class="lead text-muted animate-up delay-1">Выберите интересующее вас направление или создайте новую категорию</p>
+        </div>
+    </div>
+
+    <div class="text-end mb-4 animate-up delay-2">
+        <a href="{% url 'add_category' %}" class="btn btn-main">
+            <i class="fas fa-plus-circle me-2"></i>Добавить категорию
+        </a>
+    </div>
+
+    {% if categories %}
+    <div class="row g-4">
+        {% for category in categories %}
+        <div class="col-lg-4 col-md-6 animate-up delay-{% cycle '1' '2' '3' %}">
+            <div class="category-card card border-0 shadow-sm h-100">
+                <div class="card-img-top" style="
+                    height: 180px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: {% if category.image_url %}
+                        #f8f9fa
+                    {% else %}
+                        linear-gradient(45deg, #{% cycle '6a11cb,2575fc' '00b4d8,48cae4' 'f83600,f9d423' %})
+                    {% endif %};
+                    overflow: hidden;
+                ">
+                    {% if category.image_url %}
+                        <img src="{{ category.image_url }}" alt="{{ category.category_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <i class="fas fa-{% cycle 'umbrella-beach' 'mountain' 'city' 'ship' 'plane' 'skiing' %} text-white" style="font-size: 3rem;"></i>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h3 class="h5 card-title">{{ category.category_name }}</h3>
+                    <p class="card-text text-muted small">{{ category.description }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
+                    <a href="{% url 'category_detail' category.id %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-eye me-1"></i> Подробнее
+                    </a>
+                    <div>
+                        <a href="{% url 'edit_category' category.id %}" class="btn btn-outline-warning btn-sm me-1" title="Изменить">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'delete_category' category.id %}" class="btn btn-outline-danger btn-sm" title="Удалить">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 animate-up">
+        <div class="empty-state">
+            <i class="fas fa-folder-open fa-4x text-muted mb-4"></i>
+            <h3 class="h4">Категорий пока нет</h3>
+            <p class="text-muted mb-4">Начните с добавления первой категории туров</p>
+            <a href="{% url 'add_category' %}" class="btn btn-main">
+                <i class="fas fa-plus-circle me-2"></i>Добавить категорию
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .category-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .category-card .card-img-top {
+        transition: all 0.5s ease;
+    }
+    .category-card:hover .card-img-top {
+        opacity: 0.9;
+    }
+    .empty-state {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+        backdrop-filter: blur(5px);
+    }
+    @media (max-width: 768px) {
+        .category-card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+{% endblock %}

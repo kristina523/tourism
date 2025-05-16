@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block title %}Главная — TravelDream{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1 class="gradient-text mb-4">Открой мир с TravelDream!</h1>
+    <p class="lead mb-4">Лучшие туры, индивидуальный подход, незабываемые впечатления.</p>
+    <img src="https://avatars.mds.yandex.net/i?id=60689af08f58b027469782b82158be86_l-10767243-images-thumbs&n=13" class="img-fluid rounded shadow-lg mb-4" alt="Путешествия">
+    <div>
+        <a href="{% url 'catalog' %}" class="btn btn-main btn-lg">Смотреть туры</a>
+    </div>
+</div>
+{% endblock %}

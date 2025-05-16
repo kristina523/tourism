@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% block title %}Контакты — TravelDream{% endblock %}
+{% block content %}
+<h2 class="gradient-text">Контакты</h2>
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><b>Телефон:</b> +7 (999) 123-45-67</li>
+            <li class="list-group-item"><b>Email:</b> info@traveldream.ru</li>
+            <li class="list-group-item"><b>Адрес:</b> г. Москва, ул. Путешественников, д. 1</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h5>Форма обратной связи</h5>
+        <form>
+            <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Ваше имя">
+            </div>
+            <div class="mb-2">
+                <input type="email" class="form-control" placeholder="Ваш email">
+            </div>
+            <div class="mb-2">
+                <textarea class="form-control" placeholder="Ваше сообщение"></textarea>
+            </div>
+            <button class="btn btn-main" type="submit">Отправить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

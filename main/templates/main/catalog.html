@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% block title %}Каталог туров — TravelDream{% endblock %}
+{% block content %}
+<h2 class="gradient-text mb-4">Каталог туров</h2>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card card-tour h-100">
+            {% if product.image_url %}
+                <img src="{{ product.image_url }}" class="card-img-top" alt="Фото тура" style="height:200px;object-fit:cover;">
+            {% else %}
+                <img src="https://source.unsplash.com/400x200/?tour,{{ product.title|urlencode }}" class="card-img-top" alt="Фото тура" style="height:200px;object-fit:cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">{{ product.description|truncatechars:80 }}</p>
+                <p class="card-text"><b>Цена:</b> {{ product.price }} руб.</p>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-main btn-sm">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Туров пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Ваша корзина</h2>
+    {% if cart|length == 0 %}
+        <p>Корзина пуста.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Тур</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.tour.title }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'cart_remove' item.tour.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="fw-bold">Итого: {{ cart.get_total_price }} руб.</p>
+        <a href="{% url 'order_create' %}" class="btn btn-success">Оформить заказ</a>
+    {% endif %}
+</div>
+{% endblock %}
