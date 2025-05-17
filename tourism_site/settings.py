@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'main',         # твое основное приложение
-    'api_shop',     # новое приложение для API
+    'main',         
+    'api_shop',    
 ]
 
 MIDDLEWARE = [
@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'tourism_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tourism_db',
-        'USER': 'postgres',
-        'PASSWORD': '1',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'liza1230$default',
+        'USER': 'liza1230',
+        'PASSWORD': 'frogSpawn8324',
+        'HOST': 'liza1230.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
     }
 }
 
